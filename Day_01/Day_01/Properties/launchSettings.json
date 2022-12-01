@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Day_01": {
+      "commandName": "Project",
+      "commandLineArgs": "\"D:\\workspace\\c#\\adventofcode_22\\Day_01\\Day_01\\CalorieList.txt\""
+    }
+  }
+}
