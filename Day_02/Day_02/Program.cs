@@ -43,20 +43,10 @@ class RockPaperScissors
     }
 }
 
-/*
- *      [- OPONENT -]      |         [- PLAYER -]               |        [- OUTCOMES -]
- *                         |                                    |
- * A = Rock                |     X = Rock         | 1 Point     |    Lose             | 0 Points
- * B = Paper               |     Y = Paper        | 2 Points    |    Draw             | 3 Points
- * C = Scissors            |     Z = Scissors     | 3 Points    |    Win              | 6 Points
- * 
- */
 class Game
 {
     #region MEMBER VARIABLES
-    private string[] oponentMoves = { "A", "B", "C" };
-    private string[] playerMoves = { "X", "Y", "Z" };
-    private string[] _strategy;
+    private string[] oponentMoves = { "A", "B", "C" }, playerMoves = { "X", "Y", "Z" }, _strategy;
     private bool correctDecryption;
     #endregion
 
@@ -74,10 +64,9 @@ class Game
         {
             string[] round = line.Split(' ');
             int moveOponent = oponentMoves.ToList().IndexOf(round[0]) + 1;
-            int movePlayer = -1;
 
-            movePlayer = correctDecryption ? DeterminePlayerMove(moveOponent, playerMoves.ToList().IndexOf(round[1]) + 1) :
-                                                movePlayer = playerMoves.ToList().IndexOf(round[1]) + 1;
+            int movePlayer = correctDecryption ?    DeterminePlayerMove(moveOponent, playerMoves.ToList().IndexOf(round[1]) + 1) :
+                                                    movePlayer = playerMoves.ToList().IndexOf(round[1]) + 1;
 
             points += CalculateRoundPoints(moveOponent, movePlayer);
         }
@@ -92,76 +81,47 @@ class Game
     #endregion
 
     #region PRIVATE METHODS
+    /* Rock     = 1     | 1 beats 3    1 - 3 = -2
+     * Paper    = 2     | 2 beats 1    2 - 1 = 1
+     * Scissors = 3     | 3 beats 2    3 - 2 = 1
+     * 
+     * Draw results in 0
+     */
     private int CalculateRoundPoints(int oponent, int player)
     {
         int points = player;
-        int gameResult = Math.Abs(oponent - player);
 
-        /*
-         * Rock     = 1
-         * Paper    = 2
-         * Scissors = 3
-         * 
-         * 1 beats 3    1 - 3 = -2
-         * 2 beats 1    2 - 1 = 1
-         * 3 beats 2    3 - 2 = 1
-         * 
-         * Draw results in 0
-         */
-
-        switch (gameResult)
+        _ = Math.Abs(oponent - player) switch
         {
-            case 0:
-                points += 3;
-                break;
+            0 => points += 3,
+            1 => points += oponent > player ? 0 : 6,
+            2 => points += oponent > player ? 6 : 0,
+            _ => points += 0
+        };
 
-            case 1:
-                points += oponent > player ? 0 : 6;
-                break;
-
-            case 2:
-                points += oponent > player ? 6 : 0;
-                break;
-        }
         return points;
     }
 
-    /*
-     * Simulate a game with a for loop and compare the outcome with the specified outcome. 
+    /* Simulate a game with a for loop and compare the outcome with the specified outcome. 
      * If Outcomes match, return the proper player move.
      */
     private int DeterminePlayerMove(int oponent, int specifiedOutcome)
     {
-
         for (int simulatedPlayer = 1; simulatedPlayer <= 3; simulatedPlayer++)
         {
-            int result = Math.Abs(oponent - simulatedPlayer);
-            int gameResult = -1; //  | -1 = Error | 1 = Lose | 2 = Draw | 3 = Win | 
+            int gameResult = -1; //  | -1 = Error | 1 = Lose | 2 = Draw | 3 = Win |
 
-            switch (result)
+            _ = Math.Abs(oponent - simulatedPlayer) switch
             {
-                case 0: //Draw
-                    gameResult = 2;
-                    break;
+                0 => gameResult = 2,
+                1 => gameResult = (oponent > simulatedPlayer) ? 1 : 3,
+                2 => gameResult = (oponent > simulatedPlayer) ? 3 : 1,
+                _ => gameResult = -1
+            };
 
-                case 1: // Bigger Number wins
-                    gameResult = (oponent > simulatedPlayer) ? 1 : 3;
-                    break;
-
-                case 2: //Little Number wins
-                    gameResult = (oponent > simulatedPlayer) ? 3 : 1;
-                    break;
-            }
-
-            if (gameResult == specifiedOutcome)
-            {
-                return simulatedPlayer;
-            }
+            if (gameResult == specifiedOutcome) return simulatedPlayer;
         }
-
         return -1;
     }
-
     #endregion
-
 }
