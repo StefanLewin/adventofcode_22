@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Day_02": {
+      "commandName": "Project",
+      "commandLineArgs": "\"D:\\workspace\\c#\\adventofcode_22\\Day_02\\Day_02\\RPS_Guide.txt\""
+    }
+  }
+}
