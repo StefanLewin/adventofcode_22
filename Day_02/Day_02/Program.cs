@@ -91,7 +91,7 @@ class Game
     }
     #endregion
 
-    #region PRIVATE VARIABLES
+    #region PRIVATE METHODS
     private int CalculateRoundPoints(int oponent, int player)
     {
         int points = player;
