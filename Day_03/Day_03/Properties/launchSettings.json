@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Day_03": {
+      "commandName": "Project",
+      "commandLineArgs": "\"D:\\workspace\\c#\\adventofcode_22\\Day_03\\Day_03\\rucksack_list.txt\""
+    }
+  }
+}
